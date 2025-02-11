@@ -13,8 +13,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    test();
     super.initState();
+    test();
   }
 
   @override
@@ -49,15 +49,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   test() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Future.delayed(const Duration(seconds: 3)).then((value) {
-      if (sharedPreferences.getString("refresh_token") != null) {
+    String? refreshToken = sharedPreferences.getString("refresh_token");
+    if (refreshToken != null) {
+      String? newAccessToken =
+          await context.read<RefreshTokenCubit>().refreshToken();
+      if (newAccessToken != null) {
         Navigator.pushNamedAndRemoveUntil(
             context, "/home_screen", (route) => false);
-      } else {
-        context.read<RefreshTokenCubit>().refreshToken();
-        Navigator.pushNamedAndRemoveUntil(
-            context, "/login_screen", (route) => false);
+        return;
       }
-    });
+    }
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/start_screen", (route) => false);
   }
 }

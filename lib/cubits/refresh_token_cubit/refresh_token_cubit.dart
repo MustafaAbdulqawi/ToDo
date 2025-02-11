@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +12,7 @@ class RefreshTokenCubit extends Cubit<RefreshTokenState> {
   RefreshTokenCubit() : super(RefreshTokenInitial());
   Dio dio = Dio();
 
-  Future<void> refreshToken() async {
+  Future<String?>? refreshToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
       emit(RefreshTokenLoadingState());
@@ -18,17 +20,15 @@ class RefreshTokenCubit extends Cubit<RefreshTokenState> {
         "https://todo.iraqsapp.com/auth/refresh-token?token=${sharedPreferences.getString("refresh_token")}",
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${sharedPreferences.getString("token")}',
+            'Authorization': 'Bearer ${sharedPreferences.getString("access_token")}',
           },
         ),
       );
+      String newAccessToken = data.data["access_token"];
+      sharedPreferences.setString("access_token", newAccessToken);
+      log(data.data["access_token"]);
       emit(RefreshTokenSuccessState());
-      if (kDebugMode) {
-        print(data.data);
-      }
-      if (kDebugMode) {
-        print("access token OKKKKKKKKKKKKKKK");
-      }
+      return newAccessToken;
     } on DioException catch (e) {
       emit(RefreshTokenErrorState());
       switch (e.type) {
@@ -49,7 +49,7 @@ class RefreshTokenCubit extends Cubit<RefreshTokenState> {
         case DioExceptionType.unknown:
           print("unknown");
       }
-
+      return null;
     }
   }
 }

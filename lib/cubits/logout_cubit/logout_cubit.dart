@@ -21,7 +21,7 @@ class LogoutCubit extends Cubit<LogoutState> {
         },
         options: Options(
           headers: {
-            "Authorization": "Bearer ${sharedPreferences.getString('token')}",
+            "Authorization": "Bearer ${sharedPreferences.getString('access_token')}",
           },
         ),
       );

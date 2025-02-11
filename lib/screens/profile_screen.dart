@@ -22,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -69,7 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Color(0XFF5f33e1),
+              ),
             );
           } else {
             return Center(

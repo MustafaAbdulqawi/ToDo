@@ -25,9 +25,9 @@ class CustomTextFormField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 3.5.w, vertical: 1.h),
       child: TextFormField(
-        expands: false,
+        //  expands: false,
         maxLines: maxLines ?? 1,
-        keyboardType: TextInputType.multiline,
+        // keyboardType: TextInputType.multiline,
         scrollPhysics: BouncingScrollPhysics(),
         obscureText: obscureText ?? false,
         controller: controller,

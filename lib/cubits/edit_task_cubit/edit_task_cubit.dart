@@ -24,7 +24,8 @@ class EditTaskCubit extends Cubit<EditTaskState> {
         "https://todo.iraqsapp.com/todos/$id",
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${sharedPreferences.getString("token")}',
+            'Authorization':
+                'Bearer ${sharedPreferences.getString("access_token")}',
             'Content-Type': 'application/json',
           },
         ),
@@ -107,7 +108,8 @@ class EditTaskCubit extends Cubit<EditTaskState> {
         "https://todo.iraqsapp.com/todos/$id",
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${sharedPreferences.getString("token")}',
+            'Authorization':
+                'Bearer ${sharedPreferences.getString("access_token")}',
             'Content-Type': 'application/json',
           },
         ),

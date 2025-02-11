@@ -61,13 +61,19 @@ class _LoginScreenState extends State<LoginScreen> {
           BlocConsumer<AppCubit, AppState>(
             listener: (context, state) {
               if (state is LoginLoadingState) {
-                const CircularProgressIndicator();
+                const CircularProgressIndicator(
+                  color: Color(0XFF5f33e1),
+                );
               } else if (state is LoginErrorState) {
                 toast(
                   msg: state.message,
                   color: Colors.red,
                 );
               } else {
+                if (state is LoginSuccessState) {
+                  loginPhoneEditingController.clear();
+                  loginPasswordEditingController.clear();
+                }
                 toast(
                   msg: "تم التسجيل",
                   color: Colors.green,
@@ -85,21 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 7.w),
                 child: state is LoginLoadingState
                     ? const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Color(0XFF5f33e1),
+                        ),
                       )
                     : CustomButton(
                         text: "Sign In",
                         pressed: () {
-                          cubit
-                              .login(
+                          cubit.login(
                             phone: loginPhoneEditingController.text,
                             password: loginPasswordEditingController.text,
-                          )
-                              .then(
-                            (v) {
-                              loginPhoneEditingController.clear();
-                              loginPasswordEditingController.clear();
-                            },
                           );
                         },
                       ),

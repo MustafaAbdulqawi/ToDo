@@ -21,7 +21,7 @@ class DeleteTaskCubit extends Cubit<DeleteTaskState> {
         options: Options(
           headers: {
             "Authorization":
-                "Bearer ${sharedPreferences.getString('token')}",
+                "Bearer ${sharedPreferences.getString('access_token')}",
           },
         ),
       );

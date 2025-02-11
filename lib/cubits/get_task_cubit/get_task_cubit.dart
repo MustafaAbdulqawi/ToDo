@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/API/get_todos.dart';
 part 'get_task_state.dart';
@@ -19,7 +18,8 @@ class GetTaskCubit extends Cubit<GetTaskState> {
         "https://todo.iraqsapp.com/todos?page=1",
         options: Options(
           headers: {
-            "Authorization": "Bearer ${sharedPreferences.getString('token')}",
+            "Authorization":
+                "Bearer ${sharedPreferences.getString('access_token')}",
           },
         ),
       );
@@ -33,23 +33,23 @@ class GetTaskCubit extends Cubit<GetTaskState> {
       emit(GetTaskErrorState());
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          print("connectionTimeout");
+          log("connectionTimeout");
         case DioExceptionType.sendTimeout:
-          print("sendTimeout");
+          log("sendTimeout");
         case DioExceptionType.receiveTimeout:
-          print("receiveTimeout");
+          log("receiveTimeout");
         case DioExceptionType.badCertificate:
-          print("badCertificate");
+          log("badCertificate");
         case DioExceptionType.badResponse:
           emit(BadRes(message: e.response!.data["message"]));
-          log( e.response!.data["message"]);
-          print("badResponse");
+          log(e.response!.data["message"]);
+          log("badResponse");
         case DioExceptionType.cancel:
-          print("cancel");
+          log("cancel");
         case DioExceptionType.connectionError:
-          print("connectionError");
+          log("connectionError");
         case DioExceptionType.unknown:
-          print("unknown");
+          log("unknown");
       }
       return [];
     }

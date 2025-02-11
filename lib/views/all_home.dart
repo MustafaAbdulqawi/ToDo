@@ -37,7 +37,9 @@ class AllHome extends StatelessWidget {
             children: [
               state is GetTaskLoadingState
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Color(0XFF5f33e1),
+                      ),
                     )
                   : state is GetTaskSuccessState
                       ? state.getTodos.isEmpty

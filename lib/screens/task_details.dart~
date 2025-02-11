@@ -71,9 +71,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                   context: context,
                   barrierDismissible: false,
                   builder: (context) => Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0XFF5f33e1),
-                    ),
+                    child: CircularProgressIndicator(),
                   ),
                 );
                 setState(() {});
@@ -138,9 +136,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                         context: context,
                         barrierDismissible: false,
                         builder: (context) => Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0XFF5f33e1),
-                          ),
+                          child: CircularProgressIndicator(),
                         ),
                       );
                       cubit.updateStatus(value, data, context);
@@ -162,9 +158,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                         context: context,
                         barrierDismissible: false,
                         builder: (context) => Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0XFF5f33e1),
-                          ),
+                          child: CircularProgressIndicator(),
                         ),
                       );
                       cubit.updatePriority(value, data, context);

@@ -39,17 +39,14 @@ class _StartScreenState extends State<StartScreen> {
           SizedBox(
             height: 5.h,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 7.w),
-            child: CustomButton(
-              text: "Let's Start",
-              pressed: () {
-                Navigator.pushNamed(
-                  context,
-                  "/login_screen",
-                );
-              },
-            ),
+          CustomButton(
+            text: "Let's Start",
+            pressed: () {
+              Navigator.pushNamed(
+                context,
+                "/login_screen",
+              );
+            },
           ),
         ],
       ),

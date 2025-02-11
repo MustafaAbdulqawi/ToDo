@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +21,7 @@ class AppCubit extends Cubit<AppState> {
         },
       );
       SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-      sharedPreferences.setString("token", data.data["access_token"]);
+      sharedPreferences.setString("access_token", data.data["access_token"]);
       sharedPreferences.setString("refresh_token", data.data["refresh_token"]);
       sharedPreferences.setString("id", data.data["_id"]);
       emit(LoginSuccessState());
@@ -30,21 +32,21 @@ class AppCubit extends Cubit<AppState> {
       emit(LoginErrorState(e.response!.data["message"]));
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          print("connectionTimeout");
+          log("connectionTimeout");
         case DioExceptionType.sendTimeout:
-          print("sendTimeout");
+          log("sendTimeout");
         case DioExceptionType.receiveTimeout:
-          print("receiveTimeout");
+          log("receiveTimeout");
         case DioExceptionType.badCertificate:
-          print("badCertificate");
+          log("badCertificate");
         case DioExceptionType.badResponse:
-          print("badResponse");
+          log("badResponse");
         case DioExceptionType.cancel:
-          print("cancel");
+          log("cancel");
         case DioExceptionType.connectionError:
-          print("connectionError");
+          log("connectionError");
         case DioExceptionType.unknown:
-          print("unknown");
+          log("unknown");
       }
       return null;
     }

@@ -1,9 +1,8 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/API/error_info.dart';
-import 'package:todo/end_point.dart';
 
 part 'create_task_state.dart';
 
@@ -23,7 +22,8 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
   }) async {
     try {
       emit(LoadingCreateTask());
-      SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
       final data = await dio.post(
         "https://todo.iraqsapp.com/todos",
         data: {
@@ -37,41 +37,43 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
           headers: {
             "Content-Type": "application/json",
             "Authorization":
-                "Bearer ${sharedPreferences.getString('token')}"
+                "Bearer ${sharedPreferences.getString('access_token')}"
           },
         ),
       );
       emit(SuccessCreateTask());
-      print(data.data);
+      log(data.data);
     } on DioException catch (e) {
-      print("❌ API Error: ${e.response?.data}");
-      print("❌ Status Code: ${e.response?.statusCode}");
-      emit(ErrorCreateTask(error: e.response!.data["message"], statusCode: e.response!.data["statusCode"]));
+      log("❌ API Error: ${e.response?.data}");
+      log("❌ Status Code: ${e.response?.statusCode}");
+      emit(ErrorCreateTask(
+          error: e.response?.data["message"] ?? "",
+          statusCode: e.response?.data["status"] ?? 0));
 
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          print("connectionTimeout");
+          log("connectionTimeout");
           break;
         case DioExceptionType.sendTimeout:
-          print("sendTimeout");
+          log("sendTimeout");
           break;
         case DioExceptionType.receiveTimeout:
-          print("receiveTimeout");
+          log("receiveTimeout");
           break;
         case DioExceptionType.badCertificate:
-          print("badCertificate");
+          log("badCertificate");
           break;
         case DioExceptionType.badResponse:
-          print("badResponse: ${e.response?.data}");
+          log("badResponse: ${e.response?.data}");
           break;
         case DioExceptionType.cancel:
-          print("cancel");
+          log("cancel");
           break;
         case DioExceptionType.connectionError:
-          print("connectionError");
+          log("connectionError");
           break;
         case DioExceptionType.unknown:
-          print("unknown");
+          log("unknown");
           break;
       }
       return null;
@@ -89,7 +91,47 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
 
     if (pickedDate != null && pickedDate != selectedDate) {
       selectedDate = pickedDate;
-      emit(SelectedDateState()); // حالة جديدة لتحديث الـ UI
+      emit(SelectedDateState());
     }
   }
 }
+
+
+// if (state.error == errorMessagePriority) {
+// toast(
+// msg: "please choose priority",
+// color: Colors.red,
+// );
+// } else if (state.error == errorMessageDesc) {
+// toast(
+// msg: "please enter description",
+// color: Colors.red,
+// );
+// } else if (state.error == errorMessageTitle) {
+// toast(
+// msg: "please enter title",
+// color: Colors.red,
+// );
+// } else if (state.error ==
+// "Todo validation failed: title: Path `title` is required., desc: Path `desc` is required., priority: `Medium` is not a valid enum value for path `priority`.") {
+// toast(
+// msg: "Please make sure to fill in all fields",
+// color: Colors.red,
+// );
+// } else if (state.error == "Todo validation failed: title: Path `title` is required., priority: `Medium` is not a valid enum value for path `priority`."){
+// toast(
+// msg: "Please make sure to fill in all fields",
+// color: Colors.red,
+// );
+// }
+// else if (state.error == "Todo validation failed: title: Path `title` is required., desc: Path `desc` is required."){
+// toast(
+// msg: "Please make sure to fill in all fields",
+// color: Colors.red,
+// );
+// }else if(state.error == "Todo validation failed: desc: Path `desc` is required., priority: `Medium` is not a valid enum value for path `priority`."){
+// toast(
+// msg: "Please make sure to fill in all fields",
+// color: Colors.red,
+// );
+// }

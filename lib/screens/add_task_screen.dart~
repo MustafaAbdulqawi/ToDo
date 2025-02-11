@@ -280,7 +280,12 @@ class _AddTaskState extends State<AddTask> {
                                   cubit.selectedDate?.toIso8601String() ?? "",
                               image: _base64Image!,
                             );
-                          }  else {
+                          } else if (priority.isEmpty || priority == null) {
+                            toast(
+                              msg: "Please select a priority level",
+                              color: Colors.red,
+                            );
+                          } else {
                             toast(
                               msg: "Please select an image",
                               color: Colors.red,

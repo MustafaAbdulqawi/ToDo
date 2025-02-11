@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo/cubits/create_task_cubit/create_task_cubit.dart';
 import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
 import 'package:todo/cubits/logout_cubit/logout_cubit.dart';
 import 'package:todo/views/all_home.dart';
@@ -152,6 +153,10 @@ class _HomeScreenState extends State<HomeScreen>
             shape: const CircleBorder(),
             backgroundColor: const Color(0XFF5f33e1),
             onPressed: () {
+              final cubit = BlocProvider.of<CreateTaskCubit>(context);
+              cubit.titleCon.clear();
+              cubit.descCon.clear();
+              cubit.dateCon.clear();
               Navigator.pushNamed(
                 context,
                 "/add_task",

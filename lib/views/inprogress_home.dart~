@@ -35,9 +35,7 @@ class InprogressHome extends StatelessWidget {
             children: [
               state is GetTaskLoadingState
                   ? const Center(
-                child: CircularProgressIndicator(
-                  color: Color(0XFF5f33e1),
-                ),
+                child: CircularProgressIndicator(),
               )
                   : state is GetTaskSuccessState
                   ? state.getTodos

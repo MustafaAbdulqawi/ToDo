@@ -31,7 +31,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocConsumer<SignUpCubit, SignUpState>(
       listener: (context, state) {
         if (state is SignUpLoadingState) {
-          const CircularProgressIndicator();
+          const CircularProgressIndicator(
+            color: Color(0XFF5f33e1),
+          );
         } else if (state is SignUpSuccessState) {
           toast(
             msg: "تم انشاء الحساب بنجاح",
@@ -119,7 +121,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               state is SignUpLoadingState
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Color(0XFF5f33e1),
+                      ),
                     )
                   : Padding(
                       padding: EdgeInsets.symmetric(horizontal: 7.w),
