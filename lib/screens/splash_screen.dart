@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    test();
+    checkExpiredOrNo();
   }
 
   @override
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  test() async {
+  checkExpiredOrNo() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? refreshToken = sharedPreferences.getString("refresh_token");
     if (refreshToken != null) {

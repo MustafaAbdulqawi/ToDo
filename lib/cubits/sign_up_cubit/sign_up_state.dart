@@ -5,6 +5,10 @@ sealed class SignUpState {}
 final class SignUpInitial extends SignUpState {}
 
 final class SignUpLoadingState extends SignUpState {}
+final class ToggledSuccessState extends SignUpState {}
+final class SuccessSelectedCountryCode extends SignUpState {}
+final class SuccessSelectedLevel extends SignUpState {}
+final class SuccessSelectedNumber extends SignUpState {}
 
 
 

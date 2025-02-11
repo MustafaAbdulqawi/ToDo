@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
 
-class MoreOfExpLevel extends StatefulWidget {
+class MoreOfExpLevel extends StatelessWidget {
   final String text;
   final ValueChanged<String> onSelected;
 
   const MoreOfExpLevel({
-    Key? key,
+    super.key,
     required this.text,
     required this.onSelected,
-  }) : super(key: key);
-
-  @override
-  _MoreOfExpLevelState createState() => _MoreOfExpLevelState();
-}
-
-class _MoreOfExpLevelState extends State<MoreOfExpLevel> {
-  String selectedLevel = "Senior";
+  });
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SignUpCubit>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-          SizedBox(width: 1.w),
+        SizedBox(width: 1.w),
         Text(
-          selectedLevel,
-          style:  TextStyle(
+          cubit.selectedLevel,
+          style: TextStyle(
             fontSize: 17.sp,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -37,10 +33,8 @@ class _MoreOfExpLevelState extends State<MoreOfExpLevel> {
           color: Colors.white,
           icon: const Icon(Icons.arrow_drop_down_sharp),
           onSelected: (value) {
-            setState(() {
-              selectedLevel = value;
-            });
-            widget.onSelected(value);
+            cubit.chooseLevel(value);
+            onSelected(value);
           },
           itemBuilder: (context) => [
             const PopupMenuItem(value: "fresh", child: Text("fresh")),

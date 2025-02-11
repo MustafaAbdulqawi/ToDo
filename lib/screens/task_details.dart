@@ -1,30 +1,22 @@
-import 'dart:typed_data' as typed_data; // أضف alias لتجنب التعارض
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:todo/API/get_todos.dart';
+import 'package:todo/components/custom_date_details.dart';
+import 'package:todo/components/custom_drop_down_button.dart';
+import 'package:todo/components/custom_pop_menu_button_details.dart';
 import 'package:todo/cubits/delete_task_cubit/delete_task_cubit.dart';
 import 'package:todo/cubits/edit_task_cubit/edit_task_cubit.dart';
 import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/custom/custom_date_details.dart';
-import 'package:todo/custom/custom_drop_down_button.dart';
-import 'package:todo/custom/custom_pop_menu_button_details.dart';
-import 'package:todo/end_point.dart';
 import 'package:todo/screens/login_screen.dart';
 
-class TaskDetails extends StatefulWidget {
+class TaskDetails extends StatelessWidget {
   const TaskDetails({
     super.key,
   });
 
-  @override
-  State<TaskDetails> createState() => _TaskDetailsState();
-}
-
-class _TaskDetailsState extends State<TaskDetails> {
   @override
   Widget build(BuildContext context) {
     final GetTodos data =
@@ -53,7 +45,6 @@ class _TaskDetailsState extends State<TaskDetails> {
               CustomPopMenuButtonDetails(
                 pressed: () {
                   final cubit = context.read<EditTaskCubit>();
-
                   cubit.editing(data, context);
                 },
                 onTap: () {
@@ -76,7 +67,7 @@ class _TaskDetailsState extends State<TaskDetails> {
                     ),
                   ),
                 );
-                setState(() {});
+                // setState(() {});
               } else if (state is SuccessEdit) {
                 toast(
                   msg: "Edit",
@@ -157,7 +148,6 @@ class _TaskDetailsState extends State<TaskDetails> {
                     selected: data.priority,
                     onSelected: (value) {
                       cubit.selectedPriority = value;
-
                       showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -193,72 +183,3 @@ class _TaskDetailsState extends State<TaskDetails> {
   }
 }
 
-// PopupMenuButton<String>(
-// icon: const Icon(Icons.more_vert),
-// onSelected: (value) {},
-// itemBuilder: (BuildContext context) => [
-// PopupMenuItem(
-// onTap: () {
-// showBottomSheet(
-// backgroundColor: Colors.white,
-// context: context,
-// builder: (context) {
-// return Column(
-// children: [
-// CustomTextFormField(
-// controller: titleCon,
-// hintText: "Title",
-// ),
-// CustomTextFormField(
-// controller: descCon,
-// hintText: "Desc",
-// ),
-// CustomButton(
-// text: "Edit",
-// pressed: () {
-// context
-//     .read<EditTaskCubit>()
-//     .edit(
-// id: data.id,
-// title: titleCon.text,
-// desc: descCon.text,
-// status: selectedStatus ?? data.status,
-// priority:
-// selectedPriority ?? data.priority,
-// )
-//     .then((_) {
-// context.read<GetTaskCubit>().getTasksList();
-// Navigator.pop(context);
-// });
-// },
-// ),
-// ],
-// );
-// },
-// );
-// },
-// value: 'edit',
-// child: const Text('Edit', style: TextStyle(fontSize: 18)),
-// ),
-// PopupMenuItem(
-// onTap: () {
-// context
-//     .read<DeleteTaskCubit>()
-//     .delete(
-// id: data.id,
-// )
-//     .then(
-// (value) {
-// context.read<GetTaskCubit>().getTasksList();
-// Navigator.pop(context);
-// },
-// );
-// },
-// value: 'delete',
-// child: const Text(
-// 'Delete',
-// style: TextStyle(fontSize: 18, color: Colors.red),
-// ),
-// ),
-// ],
-// ),

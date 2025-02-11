@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/custom/custom_button.dart';
-
+import 'package:todo/components/custom_button.dart';
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
 
@@ -39,14 +38,17 @@ class _StartScreenState extends State<StartScreen> {
           SizedBox(
             height: 5.h,
           ),
-          CustomButton(
-            text: "Let's Start",
-            pressed: () {
-              Navigator.pushNamed(
-                context,
-                "/login_screen",
-              );
-            },
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 7.w),
+            child: CustomButton(
+              text: "Let's Start",
+              pressed: () {
+                Navigator.pushNamed(
+                  context,
+                  "/login_screen",
+                );
+              },
+            ),
           ),
         ],
       ),

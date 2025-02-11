@@ -22,7 +22,6 @@ class SignUpCubit extends Cubit<SignUpState> {
   String countryCode = '+20';
   String selectLevel = "Junior";
   String selectedLevel = "Senior";
-  String selectedNumber = "+20";
   Future signUp({
     required String displayName,
     required String phone,
@@ -104,9 +103,5 @@ class SignUpCubit extends Cubit<SignUpState> {
   void chooseLevel(value){
     selectedLevel = value;
     emit(SuccessSelectedLevel());
-  }
-  void chooseNumber(value){
-    selectedNumber = value;
-    emit(SuccessSelectedNumber());
   }
 }

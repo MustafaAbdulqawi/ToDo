@@ -18,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            //context.read<GetTaskCubit>().getTasksList();
+            context.read<GetTaskCubit>().getTasksList();
             Navigator.pop(context);
           },
           icon: Image.asset("assets/Arrow - Left00.png"),

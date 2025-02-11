@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
 
-class MoreOfPhoneNumber extends StatefulWidget {
+class MoreOfPhoneNumber extends StatelessWidget {
   final String text;
   final ValueChanged<String> onSelected;
 
   const MoreOfPhoneNumber({
-    Key? key,
+    super.key,
     required this.text,
     required this.onSelected,
-  }) : super(key: key);
+  });
 
-  @override
-  _MoreOfPhoneNumberState createState() => _MoreOfPhoneNumberState();
-}
-
-class _MoreOfPhoneNumberState extends State<MoreOfPhoneNumber> {
-  String selectedNumber = "+20";
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SignUpCubit>();
     return SizedBox(
       width: 100,
       child: Row(
@@ -27,7 +24,7 @@ class _MoreOfPhoneNumberState extends State<MoreOfPhoneNumber> {
             width: 10,
           ),
           Text(
-            selectedNumber,
+            cubit.selectedNumber,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -40,10 +37,8 @@ class _MoreOfPhoneNumberState extends State<MoreOfPhoneNumber> {
               Icons.arrow_drop_down_sharp,
             ),
             onSelected: (value) {
-              setState(() {
-                selectedNumber = value;
-              });
-              widget.onSelected(value);
+              cubit.chooseNumber(value);
+              onSelected(value);
             },
             itemBuilder: (context) => [
               const PopupMenuItem(value: "+93", child: Text("Afghanistan")),

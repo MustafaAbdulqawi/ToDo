@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/end_point.dart';
 
 part 'delete_task_state.dart';
 

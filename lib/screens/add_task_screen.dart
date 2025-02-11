@@ -1,83 +1,15 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:todo/components/custom_button.dart';
+import 'package:todo/components/custom_text_form_field.dart';
 import 'package:todo/cubits/create_task_cubit/create_task_cubit.dart';
 import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/custom/custom_button.dart';
-import 'package:todo/custom/custom_text_form_field.dart';
-import 'package:todo/end_point.dart';
 import 'package:todo/screens/login_screen.dart';
 import 'package:todo/screens/propirty.dart';
-import 'package:path/path.dart' as path;
 
-class AddTask extends StatefulWidget {
+class AddTask extends StatelessWidget {
   const AddTask({super.key});
-
-  @override
-  State<AddTask> createState() => _AddTaskState();
-}
-
-class _AddTaskState extends State<AddTask> {
-  TextFormField imageCon = TextFormField();
-  TextFormField titleCon = TextFormField();
-  TextFormField descCon = TextFormField();
-  TextFormField dateCon = TextFormField();
-  String priority = "Medium";
-  File? _image;
-  String? _base64Image;
-
-  Future<File?> compressImage(File imageFile) async {
-    final tempDir = await getTemporaryDirectory();
-    final targetPath = path.join(tempDir.path,
-        "compressed_${DateTime.now().millisecondsSinceEpoch}.jpg");
-
-    final compressedImage = await FlutterImageCompress.compressAndGetFile(
-      imageFile.absolute.path,
-      targetPath,
-      quality: 65,
-      minWidth: 500,
-      minHeight: 500,
-    );
-
-    return compressedImage != null ? File(compressedImage.path) : null;
-  }
-
-  Future<void> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      File originalImage = File(pickedFile.path);
-
-      File? compressedImage = await compressImage(originalImage);
-
-      if (compressedImage != null) {
-        setState(() {
-          _image = compressedImage;
-        });
-
-        final bytes = await compressedImage.readAsBytes();
-        final base64Image = base64Encode(bytes);
-
-        setState(() {
-          _base64Image = base64Image;
-        });
-
-        print("📷 Image Compressed and Encoded Successfully!");
-      } else {
-        print("❌ فشل ضغط الصورة!");
-      }
-    } else {
-      print('لم يتم اختيار أي صورة.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +27,14 @@ class _AddTaskState extends State<AddTask> {
             color: Colors.green,
           );
         } else if (state is LoadingCreateTask) {
+          toast(msg: "Loading", color: Colors.green);
         } else if (state is ErrorCreateTask) {
-          if(state.statusCode == 500){
+          if (state.statusCode == 500) {
             toast(
               msg: "Please make sure to fill in all fields",
               color: Colors.red,
             );
-          }else if (state.error == "Unauthorized"){
+          } else if (state.error == "Unauthorized") {
             toast(
               msg: "Token Expired.. please login again",
               color: Colors.red,
@@ -109,20 +42,9 @@ class _AddTaskState extends State<AddTask> {
             Navigator.pushNamedAndRemoveUntil(
               context,
               "/login_screen",
-                  (route) => false,
+              (route) => false,
             );
           }
-          else {
-            toast(
-              msg: "Error",
-              color: Colors.red,
-            );
-          }
-        } else {
-          toast(
-            msg: "Error",
-            color: Colors.red,
-          );
         }
       },
       builder: (context, state) {
@@ -135,7 +57,7 @@ class _AddTaskState extends State<AddTask> {
             backgroundColor: Colors.white,
             leading: IconButton(
               onPressed: () {
-                context.read<GetTaskCubit>().getTasksList();
+              //  context.read<GetTaskCubit>().getTasksList();
                 Navigator.pop(context);
                 cubit.titleCon.clear();
                 cubit.descCon.clear();
@@ -156,7 +78,7 @@ class _AddTaskState extends State<AddTask> {
               ),
               GestureDetector(
                 onTap: () async {
-                  await pickImage();
+                  await cubit.pickImage();
                 },
                 child: Image.asset(
                   "assets/Frame 1111.png",
@@ -210,7 +132,7 @@ class _AddTaskState extends State<AddTask> {
                 text: "medium",
                 icon: Icons.flag_outlined,
                 onSelected: (value) {
-                  priority = value;
+                  cubit.priority = value;
                 },
                 value1: 'medium',
                 value2: 'high',
@@ -270,17 +192,18 @@ class _AddTaskState extends State<AddTask> {
                       child: CustomButton(
                         text: "Add task",
                         pressed: () async {
-                          if (_base64Image != null) {
+                          if (cubit.base64Image != null) {
                             cubit.createTask(
                               title: cubit.titleCon.text,
                               desc: cubit.descCon.text,
-                              priority:
-                                  (priority.isNotEmpty) ? priority : "medium",
+                              priority: (cubit.priority.isNotEmpty)
+                                  ? cubit.priority
+                                  : "medium",
                               dueDate:
                                   cubit.selectedDate?.toIso8601String() ?? "",
-                              image: _base64Image!,
+                              image: cubit.base64Image!,
                             );
-                          }  else {
+                          } else {
                             toast(
                               msg: "Please select an image",
                               color: Colors.red,

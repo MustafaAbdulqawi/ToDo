@@ -77,7 +77,7 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       status: selectedStatus ?? data.status,
       priority: selectedPriority ?? data.priority,
     ).then((v) {
-      BlocProvider.of<GetTaskCubit>(context).getTasksList();
+    //  BlocProvider.of<GetTaskCubit>(context).getTasksList();
       Navigator.pop(context);
     });
     emit(EditedStatus());
@@ -90,7 +90,7 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       status: selectedStatus ?? data.status,
       priority: selectedPriority ?? data.priority,
     ).then((v) {
-      BlocProvider.of<GetTaskCubit>(context).getTasksList();
+     // BlocProvider.of<GetTaskCubit>(context).getTasksList();
       Navigator.pop(context);
     });
     emit(EditedPriority());

@@ -9,6 +9,11 @@ part 'get_task_state.dart';
 class GetTaskCubit extends Cubit<GetTaskState> {
   GetTaskCubit() : super(GetTaskInitial());
   Dio dio = Dio();
+  List<GetTodos> todosList = [];
+  int currentPage = 1;
+  bool hasMoreData = true;
+  bool isLoadingMore = false;
+
   Future<List<GetTodos>> getTasksList() async {
     try {
       emit(GetTaskLoadingState());

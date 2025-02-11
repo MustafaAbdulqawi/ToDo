@@ -154,10 +154,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       print('لم يتم اختيار أي صورة.');
     }
   }
-  void selectedPriorityF(value){
-    selectedPriority = value;
-    emit(SelectedPriorityState());
-  }
+  void selectedPriopirtyF()
 }
 
 

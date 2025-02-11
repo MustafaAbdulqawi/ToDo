@@ -1,5 +1,5 @@
 part of 'app_cubit.dart';
-
+@immutable
 sealed class AppState {}
 
 final class AppInitial extends AppState {}
@@ -7,6 +7,8 @@ final class AppInitial extends AppState {}
 final class ShowAndHidePasswordLogin extends AppState {}
 
 final class ShowAndHidePasswordSignUp extends AppState {}
+
+final class VisibilitySuccessState extends AppState {}
 
 final class LoginLoadingState extends AppState {}
 

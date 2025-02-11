@@ -1,49 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:todo/components/custom_button.dart';
+import 'package:todo/components/custom_text_form_field.dart';
 import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
-import 'package:todo/custom/custom_button.dart';
-import 'package:todo/custom/custom_text_form_field.dart';
-import 'package:todo/screens/login_screen.dart';
 import 'package:todo/screens/more_of_experice_level.dart';
 import 'package:todo/screens/more_of_phone_numbers.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController signUpPhoneCon = TextEditingController();
-  TextEditingController signUpPasswordCon = TextEditingController();
-  TextEditingController signUpDisplayCon = TextEditingController();
-  TextEditingController signUpExpYerCon = TextEditingController();
-  TextEditingController signUpAddressCon = TextEditingController();
-  TextEditingController signUpLevelCon = TextEditingController();
-  IconData signUpIconData = Icons.visibility;
-  bool signUpShowPassword = false;
-  String countryCode = '+20';
-  String selectLevel = "Junior";
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpCubit, SignUpState>(
       listener: (context, state) {
-        if (state is SignUpLoadingState) {
-          const CircularProgressIndicator(
-            color: Color(0XFF5f33e1),
-          );
-        } else if (state is SignUpSuccessState) {
-          toast(
-            msg: "تم انشاء الحساب بنجاح",
-            color: Colors.green,
-          );
-        } else if (state is SignUpErrorState) {
-          toast(
-            msg: state.message,
-            color: Colors.red,
-          );
+        if (state is SignUpSuccessState) {
+          Navigator.pushNamed(context, "/login_screen");
         }
       },
       builder: (context, state) {
@@ -63,58 +35,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               CustomTextFormField(
-                controller: signUpDisplayCon,
+                controller: cubit.signUpDisplayCon,
                 hintText: 'Name',
               ),
               CustomTextFormField(
-                controller: signUpPhoneCon,
+                controller: cubit.signUpPhoneCon,
                 hintText: 'Phone',
                 prefixIcon: MoreOfPhoneNumber(
-                  text: countryCode,
+                  text: cubit.countryCode,
                   onSelected: (v) {
-                    setState(() {
-                      countryCode = v;
-                    });
+                    cubit.chooseCountryCode(v);
                   },
                 ),
               ),
               CustomTextFormField(
-                controller: signUpExpYerCon,
+                controller: cubit.signUpExpYerCon,
                 hintText: 'Years of experience',
               ),
               CustomTextFormField(
-                controller: signUpLevelCon,
+                controller: cubit.signUpLevelCon,
                 hintText: 'Choose experience Level',
                 suffixIcon: IconButton(
                   onPressed: () {},
                   icon: MoreOfExpLevel(
                     text: "Choose experience Level",
                     onSelected: (value) {
-                      signUpLevelCon.text = value;
+                      cubit.signUpLevelCon.text = value;
                     },
                   ),
                 ),
               ),
               CustomTextFormField(
-                controller: signUpAddressCon,
+                controller: cubit.signUpAddressCon,
                 hintText: 'Address',
               ),
               CustomTextFormField(
-                controller: signUpPasswordCon,
+                controller: cubit.signUpPasswordCon,
                 hintText: 'Password',
                 suffixIcon: IconButton(
                   onPressed: () {
-                    signUpIconData = signUpShowPassword
-                        ? Icons.visibility
-                        : Icons.visibility_off_outlined;
-                    signUpShowPassword = !signUpShowPassword;
-                    setState(() {});
+                    cubit.togglePasswordVisibility();
                   },
                   icon: Icon(
-                    signUpIconData,
+                    cubit.signUpIconData,
                   ),
                 ),
-                obscureText: signUpShowPassword,
+                obscureText: cubit.signUpShowPassword,
               ),
               SizedBox(
                 height: 3.h,
@@ -131,12 +97,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text: "Sign Up",
                         pressed: () {
                           cubit.signUp(
-                            displayName: signUpDisplayCon.text,
-                            phone: "$countryCode${signUpPhoneCon.text}",
-                            experienceYears: signUpExpYerCon.text,
-                            level: signUpLevelCon.text,
-                            address: signUpAddressCon.text,
-                            password: signUpPasswordCon.text,
+                            displayName: cubit.signUpDisplayCon.text,
+                            phone:
+                                "${cubit.countryCode}${cubit.signUpPhoneCon.text}",
+                            experienceYears: cubit.signUpExpYerCon.text,
+                            level: cubit.signUpLevelCon.text,
+                            address: cubit.signUpAddressCon.text,
+                            password: cubit.signUpPasswordCon.text,
                           );
                         },
                       ),
