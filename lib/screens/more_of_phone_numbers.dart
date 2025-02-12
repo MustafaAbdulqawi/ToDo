@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
+import 'package:tasky/cubits/sign_up_cubit/sign_up_cubit.dart';
 
 class MoreOfPhoneNumber extends StatelessWidget {
   final String text;

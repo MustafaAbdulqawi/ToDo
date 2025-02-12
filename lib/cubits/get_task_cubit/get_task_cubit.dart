@@ -1,24 +1,20 @@
-import 'dart:developer';
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/API/get_todos.dart';
+import 'package:tasky/data/get_todos.dart';
 part 'get_task_state.dart';
 
 class GetTaskCubit extends Cubit<GetTaskState> {
   GetTaskCubit() : super(GetTaskInitial());
   Dio dio = Dio();
-  List<GetTodos> todosList = [];
-  int currentPage = 1;
-  bool hasMoreData = true;
-  bool isLoadingMore = false;
-
-  Future<List<GetTodos>> getTasksList() async {
+  List<GetTodos> todos = [];
+  Future<void> getTasksList() async {
     try {
-      emit(GetTaskLoadingState());
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
+      emit(GetTaskLoadingState());
       final response = await dio.get(
         "https://todo.iraqsapp.com/todos?page=1",
         options: Options(
@@ -28,35 +24,86 @@ class GetTaskCubit extends Cubit<GetTaskState> {
           },
         ),
       );
-      List<GetTodos> todosList = (response.data as List)
+
+      List<GetTodos> firstPageTasks = (response.data as List)
           .map((item) => GetTodos.fromJson(item))
           .toList();
 
-      emit(GetTaskSuccessState(getTodos: todosList));
-      return todosList;
+      todos = firstPageTasks;
+      emit(GetTaskSuccessState(getTodos: todos));
+      int currentPage = 2;
+      bool hasMoreData = true;
+      while (hasMoreData) {
+        final nextPageResponse = await dio.get(
+          "https://todo.iraqsapp.com/todos?page=$currentPage",
+          options: Options(
+            headers: {
+              "Authorization":
+                  "Bearer ${sharedPreferences.getString('access_token')}",
+            },
+          ),
+        );
+        List<GetTodos> nextPageTasks = (nextPageResponse.data as List)
+            .map((item) => GetTodos.fromJson(item))
+            .toList();
+
+        if (nextPageTasks.isEmpty || nextPageTasks.length < 20) {
+          hasMoreData = false;
+        }
+
+        todos.addAll(nextPageTasks);
+        emit(GetTaskSuccessState(getTodos: todos));
+        currentPage++;
+      }
     } on DioException catch (e) {
       emit(GetTaskErrorState());
-      switch (e.type) {
-        case DioExceptionType.connectionTimeout:
-          log("connectionTimeout");
-        case DioExceptionType.sendTimeout:
-          log("sendTimeout");
-        case DioExceptionType.receiveTimeout:
-          log("receiveTimeout");
-        case DioExceptionType.badCertificate:
-          log("badCertificate");
-        case DioExceptionType.badResponse:
-          emit(BadRes(message: e.response!.data["message"]));
-          log(e.response!.data["message"]);
-          log("badResponse");
-        case DioExceptionType.cancel:
-          log("cancel");
-        case DioExceptionType.connectionError:
-          log("connectionError");
-        case DioExceptionType.unknown:
-          log("unknown");
-      }
-      return [];
+      handleDioError(e);
+    }
+  }
+
+  void handleDioError(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        if (kDebugMode) {
+          print("connectionTimeout");
+        }
+        break;
+      case DioExceptionType.sendTimeout:
+        if (kDebugMode) {
+          print("sendTimeout");
+        }
+        break;
+      case DioExceptionType.receiveTimeout:
+        if (kDebugMode) {
+          print("receiveTimeout");
+        }
+        break;
+      case DioExceptionType.badCertificate:
+        if (kDebugMode) {
+          print("badCertificate");
+        }
+        break;
+      case DioExceptionType.badResponse:
+        emit(BadRes(message: e.response!.data["message"]));
+        if (kDebugMode) {
+          print(e.response!.data["message"]);
+        }
+        break;
+      case DioExceptionType.cancel:
+        if (kDebugMode) {
+          print("cancel");
+        }
+        break;
+      case DioExceptionType.connectionError:
+        if (kDebugMode) {
+          print("connectionError");
+        }
+        break;
+      case DioExceptionType.unknown:
+        if (kDebugMode) {
+          print("unknown");
+        }
+        break;
     }
   }
 

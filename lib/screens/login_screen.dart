@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/components/custom_button.dart';
-import 'package:todo/components/custom_text_form_field.dart';
-import 'package:todo/cubits/app_cubit/app_cubit.dart';
+import 'package:tasky/components/custom_button.dart';
+import 'package:tasky/components/custom_text_form_field.dart';
+import 'package:tasky/cubits/app_cubit/app_cubit.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AppCubit>();
@@ -107,13 +105,4 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-toast({required String msg, required Color color}) {
-  return Fluttertoast.showToast(
-      msg: msg,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: color,
-      textColor: Colors.white,
-      fontSize: 16.0);
-}
+

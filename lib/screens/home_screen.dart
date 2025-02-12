@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/components/custom_floating_action_button.dart';
-import 'package:todo/components/custom_tab_bar.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/cubits/logout_cubit/logout_cubit.dart';
-import 'package:todo/views/all_home/all_home.dart';
-import 'package:todo/views/finished_home/finished_home.dart';
-import 'package:todo/views/inprogress_home/inprogress_home.dart';
-import 'package:todo/views/waiting_home/waiting_home.dart';
+import 'package:tasky/components/custom_floating_action_button.dart';
+import 'package:tasky/components/custom_tab_bar.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/cubits/logout_cubit/logout_cubit.dart';
+import 'package:tasky/views/all_home/all_home.dart';
+import 'package:tasky/views/finished_home/finished_home.dart';
+import 'package:tasky/views/inprogress_home/inprogress_home.dart';
+import 'package:tasky/views/waiting_home/waiting_home.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-
     context.read<GetTaskCubit>();
     return BlocBuilder<GetTaskCubit, GetTaskState>(
       builder: (context, state) {

@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:todo/API/get_todos.dart';
-import 'package:todo/components/custom_date_details.dart';
-import 'package:todo/components/custom_drop_down_button.dart';
-import 'package:todo/components/custom_pop_menu_button_details.dart';
-import 'package:todo/cubits/delete_task_cubit/delete_task_cubit.dart';
-import 'package:todo/cubits/edit_task_cubit/edit_task_cubit.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/screens/login_screen.dart';
+import 'package:tasky/components/custom_date_details.dart';
+import 'package:tasky/components/custom_drop_down_button.dart';
+import 'package:tasky/components/custom_date_details.dart';
+import 'package:tasky/components/custom_drop_down_button.dart';
+import 'package:tasky/components/custom_pop_menu_button_details.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/delete_task_cubit/delete_task_cubit.dart';
+import 'package:tasky/cubits/edit_task_cubit/edit_task_cubit.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/data/get_todos.dart';
 
 class TaskDetails extends StatelessWidget {
   const TaskDetails({
@@ -182,4 +184,3 @@ class TaskDetails extends StatelessWidget {
     );
   }
 }
-

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/cubits/create_task_cubit/create_task_cubit.dart';
+import 'package:tasky/cubits/create_task_cubit/create_task_cubit.dart';
 
 class PriorityButton extends StatelessWidget {
   final String text;
@@ -22,7 +22,6 @@ class PriorityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateTaskCubit>();
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 3.5.w, vertical: 1.h),
       width: double.infinity,
@@ -49,36 +48,40 @@ class PriorityButton extends StatelessWidget {
             ),
           ),
           SizedBox(width: 3.w),
-          PopupMenuButton<String>(
-            color: const Color(0XFFF0ECFF),
-            icon: Image.asset(
-              "assets/Arrow - Down 4.png",
-              color: const Color(0XFF5F33E1),
+          FocusScope(
+            canRequestFocus: false,
+            child: PopupMenuButton(
+              color: const Color(0XFFF0ECFF),
+              icon: Image.asset(
+                "assets/Arrow - Down 4.png",
+                color: const Color(0XFF5F33E1),
+              ),
+              onSelected: (value) {
+                FocusManager.instance.primaryFocus?.unfocus();
+                cubit.selectedPriorityF(value);
+                onSelected(value);
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: value1,
+                  child: Text(
+                    value1!,
+                  ),
+                ),
+                PopupMenuItem(
+                  value: value2,
+                  child: Text(
+                    value2!,
+                  ),
+                ),
+                PopupMenuItem(
+                  value: value3,
+                  child: Text(
+                    value3!,
+                  ),
+                ),
+              ],
             ),
-            onSelected: (value) {
-              cubit.selectedPriorityF(value);
-              onSelected(value);
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: value1,
-                child: Text(
-                  value1!,
-                ),
-              ),
-              PopupMenuItem(
-                value: value2,
-                child: Text(
-                  value2!,
-                ),
-              ),
-              PopupMenuItem(
-                value: value3,
-                child: Text(
-                  value3!,
-                ),
-              ),
-            ],
           ),
         ],
       ),

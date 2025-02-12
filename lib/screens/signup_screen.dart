@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/components/custom_button.dart';
-import 'package:todo/components/custom_text_form_field.dart';
-import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
-import 'package:todo/screens/more_of_experice_level.dart';
-import 'package:todo/screens/more_of_phone_numbers.dart';
+import 'package:tasky/components/custom_button.dart';
+import 'package:tasky/components/custom_text_form_field.dart';
+import 'package:tasky/cubits/sign_up_cubit/sign_up_cubit.dart';
+import 'package:tasky/screens/more_of_experice_level.dart';
+import 'package:tasky/screens/more_of_phone_numbers.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

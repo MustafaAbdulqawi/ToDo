@@ -1,10 +1,8 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/API/user_info.dart';
+import 'package:tasky/data/user_info.dart';
 
 part 'user_info_state.dart';
 
@@ -24,29 +22,43 @@ class UserInfoCubit extends Cubit<UserInfoState> {
         ),
       );
       UserInfo userInfo = UserInfo.json(data.data);
-      log("User Level: ${userInfo.level}");
-      // print(userInfo.level);
       emit(GetUserSuccessState(userInfo: userInfo));
       return userInfo;
     } on DioException catch (e) {
       emit(GetUserErrorState());
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          print("connectionTimeout");
+          if (kDebugMode) {
+            print("connectionTimeout");
+          }
         case DioExceptionType.sendTimeout:
-          print("sendTimeout");
+          if (kDebugMode) {
+            print("sendTimeout");
+          }
         case DioExceptionType.receiveTimeout:
-          print("receiveTimeout");
+          if (kDebugMode) {
+            print("receiveTimeout");
+          }
         case DioExceptionType.badCertificate:
-          print("badCertificate");
+          if (kDebugMode) {
+            print("badCertificate");
+          }
         case DioExceptionType.badResponse:
-          print("badResponse");
+          if (kDebugMode) {
+            print("badResponse");
+          }
         case DioExceptionType.cancel:
-          print("cancel");
+          if (kDebugMode) {
+            print("cancel");
+          }
         case DioExceptionType.connectionError:
-          print("connectionError");
+          if (kDebugMode) {
+            print("connectionError");
+          }
         case DioExceptionType.unknown:
-          print("unknown");
+          if (kDebugMode) {
+            print("unknown");
+          }
       }
       return null;
     }

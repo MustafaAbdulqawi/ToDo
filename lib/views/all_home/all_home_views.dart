@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/API/get_todos.dart';
-import 'package:todo/components/custom_clip_avatar.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/data/get_todos.dart';
+import 'package:tasky/components/custom_clip_avatar.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
 
 class AllHomeViews extends StatelessWidget {
   const AllHomeViews({super.key, required this.state});

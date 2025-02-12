@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/components/custom_clip_avatar.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/views/waiting_home/waiting_home_views.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/views/waiting_home/waiting_home_views.dart';
 
 class WaitingHome extends StatelessWidget {
   const WaitingHome({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetTaskCubit, GetTaskState>(
@@ -28,7 +26,7 @@ class WaitingHome extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<GetTaskCubit>();
+        context.read<GetTaskCubit>();
         return Padding(
           padding: EdgeInsets.all(14.sp),
           child: Column(

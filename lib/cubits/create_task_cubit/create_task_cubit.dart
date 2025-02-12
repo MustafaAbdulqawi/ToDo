@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
-
+import 'package:tasky/components/custom_toast.dart';
 part 'create_task_state.dart';
 
 class CreateTaskCubit extends Cubit<CreateTaskState> {
@@ -30,7 +30,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       emit(LoadingCreateTask());
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
-      final data = await dio.post(
+      await dio.post(
         "https://todo.iraqsapp.com/todos",
         data: {
           "image": image,
@@ -48,38 +48,64 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
         ),
       );
       emit(SuccessCreateTask());
-      log("CREATED");
+      if (kDebugMode) {
+        print("CREATED");
+      }
     } on DioException catch (e) {
-      log("❌ API Error: ${e.response?.data}");
-      log("❌ Status Code: ${e.response?.statusCode}");
+      if (kDebugMode) {
+        print("❌ API Error: ${e.response?.data}");
+      }
+      if (kDebugMode) {
+        print("❌ Status Code: ${e.response?.statusCode}");
+      }
       emit(ErrorCreateTask(
           error: e.response?.data["message"] ?? "",
           statusCode: e.response?.data["status"] ?? 0));
 
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          log("connectionTimeout");
+          if (kDebugMode) {
+            print("connectionTimeout");
+          }
           break;
         case DioExceptionType.sendTimeout:
-          log("sendTimeout");
+          if (kDebugMode) {
+            print("sendTimeout");
+          }
           break;
         case DioExceptionType.receiveTimeout:
-          log("receiveTimeout");
+          if (kDebugMode) {
+            print("receiveTimeout");
+          }
           break;
         case DioExceptionType.badCertificate:
-          log("badCertificate");
+          if (kDebugMode) {
+            print("badCertificate");
+          }
           break;
         case DioExceptionType.badResponse:
-          log("badResponse: ${e.response?.data}");
+          toast(
+            msg: "حجم الصوره كبير",
+            color: Colors.red,
+          );
+          if (kDebugMode) {
+            print("badResponse: ${e.response?.data}");
+          }
           break;
         case DioExceptionType.cancel:
-          log("cancel");
+          if (kDebugMode) {
+            print("cancel");
+          }
           break;
         case DioExceptionType.connectionError:
-          log("connectionError");
+          if (kDebugMode) {
+            print("connectionError");
+          }
           break;
         case DioExceptionType.unknown:
-          log("unknown");
+          if (kDebugMode) {
+            print("unknown");
+          }
           break;
       }
       return null;
@@ -100,10 +126,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       emit(SelectedDateState());
     }
   }
-  // TextFormField createImageCon = TextFormField();
-  // TextFormField createTitleCon = TextFormField();
-  // TextFormField createDescCon = TextFormField();
-  // TextFormField createDateCon = TextFormField();
+
   String priority = "Medium";
   File? image;
   String? base64Image;
@@ -116,7 +139,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
     final compressedImage = await FlutterImageCompress.compressAndGetFile(
       imageFile.absolute.path,
       targetPath,
-      quality: 65,
+      quality: 20,
       minWidth: 500,
       minHeight: 500,
     );
@@ -127,7 +150,7 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
   Future<void> pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
-    await picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       File originalImage = File(pickedFile.path);
@@ -135,68 +158,31 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       File? compressedImage = await compressImage(originalImage);
 
       if (compressedImage != null) {
-
         image = compressedImage;
         emit(CompressedImageState());
 
         final bytes = await compressedImage.readAsBytes();
         final base64Image2 = base64Encode(bytes);
 
+        base64Image = base64Image2;
 
-          base64Image = base64Image2;
-
-
-        print("📷 Image Compressed and Encoded Successfully!");
+        if (kDebugMode) {
+          print("Image Compressed and Encoded Successfully!");
+        }
       } else {
-        print("❌ فشل ضغط الصورة!");
+        if (kDebugMode) {
+          print("Image compression failed❌");
+        }
       }
     } else {
-      print('لم يتم اختيار أي صورة.');
+      if (kDebugMode) {
+        print("Image compression selected");
+      }
     }
   }
-  void selectedPriorityF(value){
+
+  void selectedPriorityF(value) {
     selectedPriority = value;
     emit(SelectedPriorityState());
   }
 }
-
-
-
-// if (state.error == errorMessagePriority) {
-// toast(
-// msg: "please choose priority",
-// color: Colors.red,
-// );
-// } else if (state.error == errorMessageDesc) {
-// toast(
-// msg: "please enter description",
-// color: Colors.red,
-// );
-// } else if (state.error == errorMessageTitle) {
-// toast(
-// msg: "please enter title",
-// color: Colors.red,
-// );
-// } else if (state.error ==
-// "Todo validation failed: title: Path `title` is required., desc: Path `desc` is required., priority: `Medium` is not a valid enum value for path `priority`.") {
-// toast(
-// msg: "Please make sure to fill in all fields",
-// color: Colors.red,
-// );
-// } else if (state.error == "Todo validation failed: title: Path `title` is required., priority: `Medium` is not a valid enum value for path `priority`."){
-// toast(
-// msg: "Please make sure to fill in all fields",
-// color: Colors.red,
-// );
-// }
-// else if (state.error == "Todo validation failed: title: Path `title` is required., desc: Path `desc` is required."){
-// toast(
-// msg: "Please make sure to fill in all fields",
-// color: Colors.red,
-// );
-// }else if(state.error == "Todo validation failed: desc: Path `desc` is required., priority: `Medium` is not a valid enum value for path `priority`."){
-// toast(
-// msg: "Please make sure to fill in all fields",
-// color: Colors.red,
-// );
-// }

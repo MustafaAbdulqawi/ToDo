@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
+import 'package:tasky/cubits/sign_up_cubit/sign_up_cubit.dart';
 
 class MoreOfExpLevel extends StatelessWidget {
   final String text;

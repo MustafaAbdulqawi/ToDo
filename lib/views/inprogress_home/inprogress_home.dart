@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/components/custom_clip_avatar.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/views/inprogress_home/inprogress_home_views.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/views/inprogress_home/inprogress_home_views.dart';
 
 class InprogressHome extends StatelessWidget {
   const InprogressHome({super.key});
@@ -28,7 +27,6 @@ class InprogressHome extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<GetTaskCubit>();
         return Padding(
           padding: EdgeInsets.all(14.sp),
           child: Column(

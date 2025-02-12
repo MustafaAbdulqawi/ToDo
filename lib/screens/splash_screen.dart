@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/cubits/refresh_token_cubit/refresh_token_cubit.dart';
+import 'package:tasky/cubits/refresh_token_cubit/refresh_token_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

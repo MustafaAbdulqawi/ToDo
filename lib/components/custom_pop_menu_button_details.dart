@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/API/get_todos.dart';
-import 'package:todo/components/custom_button.dart';
-import 'package:todo/components/custom_text_form_field.dart';
-import 'package:todo/cubits/edit_task_cubit/edit_task_cubit.dart';
+import 'package:tasky/components/custom_button.dart';
+import 'package:tasky/components/custom_text_form_field.dart';
+import 'package:tasky/cubits/edit_task_cubit/edit_task_cubit.dart';
+import 'package:tasky/data/get_todos.dart';
 
 
 class CustomPopMenuButtonDetails extends StatelessWidget {

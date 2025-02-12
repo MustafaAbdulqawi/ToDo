@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/API/get_todos.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/data/get_todos.dart';
 part 'edit_task_state.dart';
 
 class EditTaskCubit extends Cubit<EditTaskState> {
@@ -30,7 +30,6 @@ class EditTaskCubit extends Cubit<EditTaskState> {
           },
         ),
         data: {
-          // "image": image,
           "title": title,
           "desc": desc,
           "priority": priority,
@@ -39,27 +38,44 @@ class EditTaskCubit extends Cubit<EditTaskState> {
         },
       );
       emit(EditTaskSuccessState());
-      //log(data.data);
-      log("okkkkkkkkkkkkkkkk");
+      if (kDebugMode) {
+        print("okkkkkkkkkkkkkkkk");
+      }
     } on DioException catch (e) {
       emit(EditTaskErrorState());
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          log("connectionTimeout");
+          if (kDebugMode) {
+            print("connectionTimeout");
+          }
         case DioExceptionType.sendTimeout:
-          log("sendTimeout");
+          if (kDebugMode) {
+            print("sendTimeout");
+          }
         case DioExceptionType.receiveTimeout:
-          log("receiveTimeout");
+          if (kDebugMode) {
+            print("receiveTimeout");
+          }
         case DioExceptionType.badCertificate:
-          log("badCertificate");
+          if (kDebugMode) {
+            print("badCertificate");
+          }
         case DioExceptionType.badResponse:
-          log("badResponse");
+          if (kDebugMode) {
+            print("badResponse");
+          }
         case DioExceptionType.cancel:
-          log("cancel");
+          if (kDebugMode) {
+            print("cancel");
+          }
         case DioExceptionType.connectionError:
-          log("connectionError");
+          if (kDebugMode) {
+            print("connectionError");
+          }
         case DioExceptionType.unknown:
-          log("unknown");
+          if (kDebugMode) {
+            print("unknown");
+          }
       }
       return null;
     }
@@ -77,7 +93,7 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       status: selectedStatus ?? data.status,
       priority: selectedPriority ?? data.priority,
     ).then((v) {
-    //  BlocProvider.of<GetTaskCubit>(context).getTasksList();
+      BlocProvider.of<GetTaskCubit>(context).getTasksList();
       Navigator.pop(context);
     });
     emit(EditedStatus());
@@ -90,7 +106,7 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       status: selectedStatus ?? data.status,
       priority: selectedPriority ?? data.priority,
     ).then((v) {
-     // BlocProvider.of<GetTaskCubit>(context).getTasksList();
+      BlocProvider.of<GetTaskCubit>(context).getTasksList();
       Navigator.pop(context);
     });
     emit(EditedPriority());
@@ -121,7 +137,9 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       );
       emit(EditTaskSuccessState());
     } catch (e) {
-      print("object");
+      if (kDebugMode) {
+        print("object");
+      }
     }
   }
 
@@ -142,7 +160,9 @@ class EditTaskCubit extends Cubit<EditTaskState> {
       );
       emit(SuccessEdit());
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       emit(ErrorEdit());
     }
   }

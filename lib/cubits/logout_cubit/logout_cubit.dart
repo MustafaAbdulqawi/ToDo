@@ -1,10 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 part 'logout_state.dart';
 
 class LogoutCubit extends Cubit<LogoutState> {
@@ -29,25 +27,25 @@ class LogoutCubit extends Cubit<LogoutState> {
       if (kDebugMode) {
         print("OKKKKKKKKKKKKKKKKK");
       }
+
       return data.data;
     } catch (e) {
       emit(LogoutErrorState());
+
       if (kDebugMode) {
-        print(e);
+        print(e.toString());
       }
+
     }
   }
-  logOutState(context)async{
-    SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-   await sharedPreferences.clear();
-    logout().then(
-          (value) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          "/login_screen",
-              (route) => false,
-        );
-      },
+  logOutState(context) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await logout();
+    await sharedPreferences.clear();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      "/login_screen",
+          (route) => false,
     );
   }
 }

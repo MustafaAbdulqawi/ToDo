@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/API/get_todos.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/views/finished_home/finished_home_views.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/views/finished_home/finished_home_views.dart';
 
 class FinishedHome extends StatelessWidget {
   const FinishedHome({super.key});

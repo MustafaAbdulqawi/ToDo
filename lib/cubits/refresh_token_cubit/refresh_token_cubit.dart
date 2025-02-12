@@ -1,9 +1,6 @@
-import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'refresh_token_state.dart';
@@ -20,34 +17,53 @@ class RefreshTokenCubit extends Cubit<RefreshTokenState> {
         "https://todo.iraqsapp.com/auth/refresh-token?token=${sharedPreferences.getString("refresh_token")}",
         options: Options(
           headers: {
-            'Authorization': 'Bearer ${sharedPreferences.getString("access_token")}',
+            'Authorization':
+                'Bearer ${sharedPreferences.getString("access_token")}',
           },
         ),
       );
       String newAccessToken = data.data["access_token"];
       sharedPreferences.setString("access_token", newAccessToken);
-      log(data.data["access_token"]);
+      if (kDebugMode) {
+        print(data.data["access_token"]);
+      }
       emit(RefreshTokenSuccessState());
       return newAccessToken;
     } on DioException catch (e) {
       emit(RefreshTokenErrorState());
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          print("connectionTimeout");
+          if (kDebugMode) {
+            print("connectionTimeout");
+          }
         case DioExceptionType.sendTimeout:
-          print("sendTimeout");
+          if (kDebugMode) {
+            print("sendTimeout");
+          }
         case DioExceptionType.receiveTimeout:
-          print("receiveTimeout");
+          if (kDebugMode) {
+            print("receiveTimeout");
+          }
         case DioExceptionType.badCertificate:
-          print("badCertificate");
+          if (kDebugMode) {
+            print("badCertificate");
+          }
         case DioExceptionType.badResponse:
-          print("badResponse");
+          if (kDebugMode) {
+            print("badResponse");
+          }
         case DioExceptionType.cancel:
-          print("cancel");
+          if (kDebugMode) {
+            print("cancel");
+          }
         case DioExceptionType.connectionError:
-          print("connectionError");
+          if (kDebugMode) {
+            print("connectionError");
+          }
         case DioExceptionType.unknown:
-          print("unknown");
+          if (kDebugMode) {
+            print("unknown");
+          }
       }
       return null;
     }

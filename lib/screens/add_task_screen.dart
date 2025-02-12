@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/components/custom_button.dart';
-import 'package:todo/components/custom_text_form_field.dart';
-import 'package:todo/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/screens/propirty.dart';
+import 'package:tasky/components/custom_button.dart';
+import 'package:tasky/components/custom_text_form_field.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/create_task_cubit/create_task_cubit.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/screens/propirty.dart';
 
 class AddTask extends StatelessWidget {
   const AddTask({super.key});
@@ -57,7 +57,7 @@ class AddTask extends StatelessWidget {
             backgroundColor: Colors.white,
             leading: IconButton(
               onPressed: () {
-              //  context.read<GetTaskCubit>().getTasksList();
+                context.read<GetTaskCubit>().getTasksList();
                 Navigator.pop(context);
                 cubit.titleCon.clear();
                 cubit.descCon.clear();
@@ -141,43 +141,43 @@ class AddTask extends StatelessWidget {
               SizedBox(
                 height: 1.4.h,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 4.w),
-                child: const Text(
-                  "Due date",
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 4.w),
+              //   child: const Text(
+              //     "Due date",
+              //   ),
+              // ),
               SizedBox(
                 height: 1.4.h,
               ),
-              CustomTextFormField(
-                controller: cubit.dateCon,
-                hintText: "choose due date..",
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Expanded(
-                      child: Text(
-                        cubit.selectedDate == null
-                            ? "Choose due date..."
-                            : "${cubit.selectedDate!.day}/${cubit.selectedDate!.month}/${cubit.selectedDate!.year}",
-                        style:
-                            TextStyle(fontSize: 18.sp, color: Colors.black54),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.calendar_today,
-                          color: Color(0XFF5F33E1)),
-                      onPressed: () {
-                        cubit.selectDateV(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
+              // CustomTextFormField(
+              //   controller: cubit.dateCon,
+              //   hintText: "choose due date..",
+              //   suffixIcon: Row(
+              //     mainAxisSize: MainAxisSize.min,
+              //     children: [
+              //       SizedBox(
+              //         width: 4.w,
+              //       ),
+              //       // Expanded(
+              //       //   child: Text(
+              //       //     cubit.selectedDate == null
+              //       //         ? "Choose due date..."
+              //       //         : "${cubit.selectedDate!.day}/${cubit.selectedDate!.month}/${cubit.selectedDate!.year}",
+              //       //     style:
+              //       //         TextStyle(fontSize: 18.sp, color: Colors.black54),
+              //       //   ),
+              //       // ),
+              //       // IconButton(
+              //       //   icon: const Icon(Icons.calendar_today,
+              //       //       color: Color(0XFF5F33E1)),
+              //       //   onPressed: () {
+              //       //     cubit.selectDateV(context);
+              //       //   },
+              //       // ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(
                 height: 30,
               ),
@@ -222,12 +222,3 @@ class AddTask extends StatelessWidget {
     );
   }
 }
-
-// selectedImage != null
-// ? Image.file(
-// selectedImage!,
-// width: 200,
-// height: 200,
-// fit: BoxFit.cover,
-// )
-//     : const Text("لم يتم اختيار صورة بعد"),

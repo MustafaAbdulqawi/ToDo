@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/components/custom_profile_info.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/cubits/user_info_cubit/user_info_cubit.dart';
-import 'package:todo/screens/login_screen.dart';
+import 'package:tasky/components/custom_profile_info.dart';
+import 'package:tasky/components/custom_toast.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/cubits/user_info_cubit/user_info_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  // @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            //context.read<GetTaskCubit>().getTasksList();
+            context.read<GetTaskCubit>().getTasksList();
             Navigator.pop(context);
           },
           icon: Image.asset("assets/Arrow - Left00.png"),
@@ -39,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
             Navigator.pushNamedAndRemoveUntil(
               context,
               "/login_screen",
-                  (route) => false,
+              (route) => false,
             );
           }
         },

@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo/screens/login_screen.dart';
+import 'package:tasky/components/custom_toast.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
@@ -44,21 +42,37 @@ class AppCubit extends Cubit<AppState> {
       toast(msg: e.response!.data["message"], color: Colors.red);
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
-          log("connectionTimeout");
+          if (kDebugMode) {
+            print("connectionTimeout");
+          }
         case DioExceptionType.sendTimeout:
-          log("sendTimeout");
+          if (kDebugMode) {
+            print("sendTimeout");
+          }
         case DioExceptionType.receiveTimeout:
-          log("receiveTimeout");
+          if (kDebugMode) {
+            print("receiveTimeout");
+          }
         case DioExceptionType.badCertificate:
-          log("badCertificate");
+          if (kDebugMode) {
+            print("badCertificate");
+          }
         case DioExceptionType.badResponse:
-          log("badResponse");
+          if (kDebugMode) {
+            print("badResponse");
+          }
         case DioExceptionType.cancel:
-          log("cancel");
+          if (kDebugMode) {
+            print("cancel");
+          }
         case DioExceptionType.connectionError:
-          log("connectionError");
+          if (kDebugMode) {
+            print("connectionError");
+          }
         case DioExceptionType.unknown:
-          log("unknown");
+          if (kDebugMode) {
+            print("unknown");
+          }
       }
       return null;
     }

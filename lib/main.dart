@@ -1,26 +1,23 @@
-import 'package:cloudinary_dart/cloudinary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/cubits/app_cubit/app_cubit.dart';
-import 'package:todo/cubits/create_task_cubit/create_task_cubit.dart';
-import 'package:todo/cubits/delete_task_cubit/delete_task_cubit.dart';
-import 'package:todo/cubits/edit_task_cubit/edit_task_cubit.dart';
-import 'package:todo/cubits/get_task_cubit/get_task_cubit.dart';
-import 'package:todo/cubits/logout_cubit/logout_cubit.dart';
-import 'package:todo/cubits/refresh_token_cubit/refresh_token_cubit.dart';
-import 'package:todo/cubits/sign_up_cubit/sign_up_cubit.dart';
-import 'package:todo/cubits/user_info_cubit/user_info_cubit.dart';
-import 'package:todo/screens/add_task_screen.dart';
-import 'package:todo/screens/home_screen.dart';
-import 'package:todo/screens/profile_screen.dart';
-import 'package:todo/screens/signup_screen.dart';
-import 'package:todo/screens/start_screen.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/screens/splash_screen.dart';
-import 'package:todo/screens/task_details.dart';
-import 'package:todo/test.dart';
-//var cloudinary=Cloudinary.fromStringUrl('cloudinary://525483914232675:API_SECRET@NXVeI9N672c23UGiYRYks1qKnnc');
+import 'package:tasky/cubits/app_cubit/app_cubit.dart';
+import 'package:tasky/cubits/create_task_cubit/create_task_cubit.dart';
+import 'package:tasky/cubits/delete_task_cubit/delete_task_cubit.dart';
+import 'package:tasky/cubits/edit_task_cubit/edit_task_cubit.dart';
+import 'package:tasky/cubits/get_task_cubit/get_task_cubit.dart';
+import 'package:tasky/cubits/logout_cubit/logout_cubit.dart';
+import 'package:tasky/cubits/refresh_token_cubit/refresh_token_cubit.dart';
+import 'package:tasky/cubits/sign_up_cubit/sign_up_cubit.dart';
+import 'package:tasky/cubits/user_info_cubit/user_info_cubit.dart';
+import 'package:tasky/screens/add_task_screen.dart';
+import 'package:tasky/screens/home_screen.dart';
+import 'package:tasky/screens/login_screen.dart';
+import 'package:tasky/screens/profile_screen.dart';
+import 'package:tasky/screens/signup_screen.dart';
+import 'package:tasky/screens/splash_screen.dart';
+import 'package:tasky/screens/start_screen.dart';
+import 'package:tasky/screens/task_details.dart';
 void main() {
 
   runApp(const MyApp());
@@ -45,9 +42,8 @@ class MyApp extends StatelessWidget {
       child: ResponsiveSizer(
         builder: (context, orientation, screenType) {
           return MaterialApp(
-            title: 'todo app',
+            title: 'Task',
             debugShowCheckedModeBanner: false,
-
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
                 seedColor: Colors.white,error: Colors.white,
@@ -67,7 +63,6 @@ class MyApp extends StatelessWidget {
               "/add_task": (context) => const AddTask(),
               "/task_details": (context) => const TaskDetails(),
               "/profile_screen": (context) => const ProfileScreen(),
-              "/test_screen": (context) => const TestScreen(),
             },
           );
         },

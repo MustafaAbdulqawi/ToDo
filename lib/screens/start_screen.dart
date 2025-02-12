@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:todo/components/custom_button.dart';
+import 'package:tasky/components/custom_button.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
