@@ -169,8 +169,7 @@ class TaskDetails extends StatelessWidget {
                   SizedBox(height: 2.h),
                   Center(
                     child: QrImageView(
-                      data:
-                          "ID is : ${data.id}Title is : ${data.title} \n Description is : ${data.description} \n Status is : ${data.status} \n Priority is : ${data.priority} \n Created At is : ${data.createdAt} \n Updated At is : ${data.updatedAt} \n User ID is : ${data.user}${data.user}",
+                      data: "ID is : ${data.id} \n Title is : ${data.title} \n Description is : ${data.description} \n Status is : ${data.status} \n Priority is : ${data.priority} \n Updated At is : ${data.updatedAt} \n User ID is : ${data.user}${data.user}",
                       version: QrVersions.auto,
                       size: 200.0,
                     ),

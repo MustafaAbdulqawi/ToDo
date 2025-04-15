@@ -11,6 +11,7 @@ class AllHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GetTaskCubit, GetTaskState>(
+
       listener: (context, state) {
         if (state is BadRes) {
           toast(

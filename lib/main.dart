@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tasky/cubits/app_cubit/app_cubit.dart';
@@ -18,9 +19,14 @@ import 'package:tasky/screens/signup_screen.dart';
 import 'package:tasky/screens/splash_screen.dart';
 import 'package:tasky/screens/start_screen.dart';
 import 'package:tasky/screens/task_details.dart';
-void main() {
 
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +52,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.white,error: Colors.white,
+                seedColor: Colors.white,
+                error: Colors.white,
                 errorContainer: Colors.white,
                 secondaryContainer: Colors.white,
               ),

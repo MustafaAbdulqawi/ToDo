@@ -84,10 +84,6 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
           }
           break;
         case DioExceptionType.badResponse:
-          toast(
-            msg: "حجم الصوره كبير",
-            color: Colors.red,
-          );
           if (kDebugMode) {
             print("badResponse: ${e.response?.data}");
           }
@@ -126,7 +122,6 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
       emit(SelectedDateState());
     }
   }
-
   String priority = "Medium";
   File? image;
   String? base64Image;
@@ -170,6 +165,10 @@ class CreateTaskCubit extends Cubit<CreateTaskState> {
           print("Image Compressed and Encoded Successfully!");
         }
       } else {
+        toast(
+          msg: "حجم الصوره كبير",
+          color: Colors.red,
+        );
         if (kDebugMode) {
           print("Image compression failed❌");
         }

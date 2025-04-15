@@ -38,8 +38,8 @@ class AppCubit extends Cubit<AppState> {
         print("${data.data["access_token"]}");
       }
     } on DioException catch (e) {
-      emit(LoginErrorState(e.response!.data["message"]));
-      toast(msg: e.response!.data["message"], color: Colors.red);
+      emit(LoginErrorState(e.response?.data["message"]));
+      toast(msg: e.response?.data["message"], color: Colors.red);
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
           if (kDebugMode) {

@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    context.read<GetTaskCubit>().getTasksList();
+    fetchData();
     tabController = TabController(vsync: this, length: 4);
   }
 
@@ -43,11 +43,16 @@ class _HomeScreenState extends State<HomeScreen>
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
-            title: const Text(
-              "Logo",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+            title: GestureDetector(
+              onTap: () {
+                context.read<GetTaskCubit>().getTasksList();
+              },
+              child: const Text(
+                "Logo",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             actions: [
@@ -110,5 +115,9 @@ class _HomeScreenState extends State<HomeScreen>
         );
       },
     );
+  }
+
+  void fetchData() async {
+    await context.read<GetTaskCubit>().getTasksList();
   }
 }

@@ -141,43 +141,9 @@ class AddTask extends StatelessWidget {
               SizedBox(
                 height: 1.4.h,
               ),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 4.w),
-              //   child: const Text(
-              //     "Due date",
-              //   ),
-              // ),
               SizedBox(
                 height: 1.4.h,
               ),
-              // CustomTextFormField(
-              //   controller: cubit.dateCon,
-              //   hintText: "choose due date..",
-              //   suffixIcon: Row(
-              //     mainAxisSize: MainAxisSize.min,
-              //     children: [
-              //       SizedBox(
-              //         width: 4.w,
-              //       ),
-              //       // Expanded(
-              //       //   child: Text(
-              //       //     cubit.selectedDate == null
-              //       //         ? "Choose due date..."
-              //       //         : "${cubit.selectedDate!.day}/${cubit.selectedDate!.month}/${cubit.selectedDate!.year}",
-              //       //     style:
-              //       //         TextStyle(fontSize: 18.sp, color: Colors.black54),
-              //       //   ),
-              //       // ),
-              //       // IconButton(
-              //       //   icon: const Icon(Icons.calendar_today,
-              //       //       color: Color(0XFF5F33E1)),
-              //       //   onPressed: () {
-              //       //     cubit.selectDateV(context);
-              //       //   },
-              //       // ),
-              //     ],
-              //   ),
-              // ),
               const SizedBox(
                 height: 30,
               ),
